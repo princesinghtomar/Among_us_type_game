@@ -67,10 +67,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Graphic_Assignment_1
+CMAKE_SOURCE_DIR = /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Graphic_Assignment_1
+CMAKE_BINARY_DIR = /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -99,14 +99,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Graphic_Assignment_1 && $(CMAKE_COMMAND) -E cmake_progress_start /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Graphic_Assignment_1/CMakeFiles /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Graphic_Assignment_1/libraries/glfw//CMakeFiles/progress.marks
-	cd /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Graphic_Assignment_1 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 libraries/glfw/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Graphic_Assignment_1/CMakeFiles 0
+	cd /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game && $(CMAKE_COMMAND) -E cmake_progress_start /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/CMakeFiles /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/libraries/glfw//CMakeFiles/progress.marks
+	cd /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 libraries/glfw/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Graphic_Assignment_1 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 libraries/glfw/clean
+	cd /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 libraries/glfw/clean
 .PHONY : clean
 
 # The main clean target
@@ -116,17 +116,17 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Graphic_Assignment_1 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 libraries/glfw/preinstall
+	cd /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 libraries/glfw/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Graphic_Assignment_1 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 libraries/glfw/preinstall
+	cd /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 libraries/glfw/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Graphic_Assignment_1 && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Help Target
@@ -148,6 +148,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Graphic_Assignment_1 && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
