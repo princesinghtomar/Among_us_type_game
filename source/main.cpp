@@ -1,338 +1,142 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <iostream>
-#include "../assets/shapes.cpp"
-#include <assert.h>
+#include "main.h"
+#include "timer.h"
+#include "ball.h"
 
-// q,w,e,r,t,y ->  camera  movement along different axis
-// a,s,d,f,g,h ->  move object along different axis
-// j,k,l -> predecided orientation
-// z -> spin object
-// x -> spin camera
+using namespace std;
 
-bool x_pressed = false;
-bool z_pressed = false;
+GLMatrices Matrices;
+GLuint     programID;
+GLFWwindow *window;
 
-void framebuffer_size_callback(GLFWwindow *window, int width, int height);
-void processInput(GLFWwindow *window);
+/**************************
+* Customizable functions *
+**************************/
 
-// settings
-const unsigned int SCR_WIDTH = 1280;
-const unsigned int SCR_HEIGHT = 720;
-const unsigned int r = 10;
+Ball ball1;
 
-glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
-glm::vec3 traverse    = glm::vec3(0.0f, 0.0f,  0.0f);
+float screen_zoom = 1, screen_center_x = 0, screen_center_y = 0;
+float camera_rotation_angle = 0;
 
-GLFWwindow *initialise()
-{
-   // glfw: initialize and configure
-   // ------------------------------
-   glfwInit();
-   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+Timer t60(1.0 / 60);
 
-   // glfw window creation
-   // --------------------
-   GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
-   if (window == NULL)
-   {
-      std::cout << "Failed to create GLFW window" << std::endl;
-      glfwTerminate();
-      _Exit(-1);
-   }
-   glfwMakeContextCurrent(window);
-   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+/* Render the scene with openGL */
+/* Edit this function according to your assignment */
+void draw() {
+    // clear the color and depth in the frame buffer
+    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-   // glad: load all OpenGL function pointers
-   // ---------------------------------------
-   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-   {
-      std::cout << "Failed to initialize GLAD" << std::endl;
-      _Exit(-1);
-   }
-   return window;
+    // use the loaded shader program
+    // Don't change unless you know what you are doing
+    glUseProgram (programID);
+
+    // Eye - Location of camera. Don't change unless you are sure!!
+    glm::vec3 eye ( 5*cos(camera_rotation_angle*M_PI/180.0f), 0, 5*sin(camera_rotation_angle*M_PI/180.0f) );
+    // Target - Where is the camera looking at.  Don't change unless you are sure!!
+    glm::vec3 target (0, 0, 0);
+    // Up - Up vector defines tilt of camera.  Don't change unless you are sure!!
+    glm::vec3 up (0, 1, 0);
+
+    // Compute Camera matrix (view)
+    Matrices.view = glm::lookAt( eye, target, up ); // Rotating Camera for 3D
+    // Don't change unless you are sure!!
+    // Matrices.view = glm::lookAt(glm::vec3(0, 0, 3), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0)); // Fixed camera for 2D (ortho) in XY plane
+
+    // Compute ViewProject matrix as view/camera might not be changed for this frame (basic scenario)
+    // Don't change unless you are sure!!
+    glm::mat4 VP = Matrices.projection * Matrices.view;
+
+    // Send our transformation to the currently bound shader, in the "MVP" uniform
+    // For each model you render, since the MVP will be different (at least the M part)
+    // Don't change unless you are sure!!
+    glm::mat4 MVP;  // MVP = Projection * View * Model
+
+    // Scene render
+    ball1.draw(VP);
 }
 
-const char *vertexShaderSource = "\n"
-   "#version 330 core\n"
-   "layout (location = 0) in vec3 aPos;\n"
-   "layout (location = 1) in vec3 aColor;\n"
-   "out vec3 ourColor;\n"
-   "uniform mat4 model;\n"
-   "uniform mat4 view;\n"
-   "uniform mat4 projection;\n"
-   "void main()\n"
-   "{\n"
-   "  gl_Position = projection * view * model * vec4(aPos, 1.0f);\n"
-   "  ourColor = aColor;\n"
-   "}\0";
-
-const char *fragmentShaderSource = "\n"
-   "#version 330 core\n"
-   "out vec4 FragColor;\n"
-   "in vec3 ourColor;\n"
-   "void main()\n"
-   "{\n"
-   "  FragColor = vec4(ourColor, 1.0);\n"
-   "}\n\0";
-
-const char *geometryShaderSource = "";
-
-static unsigned int CompileShader(unsigned int type,const char *typeShaderSource ){
-   unsigned int shader = glCreateShader(type);
-   glShaderSource(shader, 1, &typeShaderSource, NULL);
-   glCompileShader(shader);
-
-   // check for shader compile errors
-   int success;
-   char infoLog[512];
-   glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-   if (!success)
-   {
-      glGetShaderInfoLog(shader, 512, NULL, infoLog);
-      std::cout << "ERROR::SHADER::"<< type <<" COMPILATION_FAILED\n"
-                << infoLog << std::endl;
-   }
-   return shader;
+void tick_input(GLFWwindow *window) {
+    int left  = glfwGetKey(window, GLFW_KEY_LEFT);
+    int right = glfwGetKey(window, GLFW_KEY_RIGHT);
+    if (left) {
+        // Do something
+    }
 }
 
-static unsigned int CreateShader(){
-   int success;
-   char infoLog[512];
-   unsigned int shaderProgram = glCreateProgram();
-   unsigned int vertexShader = CompileShader(GL_VERTEX_SHADER,vertexShaderSource);
-   unsigned int fragmentShader = CompileShader(GL_FRAGMENT_SHADER,fragmentShaderSource);
-   unsigned int geometryShader;
-   if(geometryShaderSource != ""){
-      geometryShader =  CompileShader(GL_GEOMETRY_SHADER,geometryShaderSource);
-   }
-   glAttachShader(shaderProgram, vertexShader);
-   glAttachShader(shaderProgram, fragmentShader);
-   if(geometryShaderSource != ""){
-      glAttachShader(shaderProgram,geometryShader);
-   }
-   glLinkProgram(shaderProgram);
-
-   // check for linking errors
-   glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-   if (!success)
-   {
-      glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-      std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n"
-                << infoLog << std::endl;
-   }
-   glDeleteShader(vertexShader);
-   glDeleteShader(fragmentShader);
-   if(geometryShaderSource!=""){
-      glDeleteShader(geometryShader);
-   }
-
-   return shaderProgram;
+void tick_elements() {
+    ball1.tick();
+    camera_rotation_angle += 1;
 }
 
-int main()
-{
-   int select_val = 0;
-   std::cout << "Enter 0 For \"Decagonal Prism\" \n" << 
-      "Enter 1 for \"Elongated Square Dipyramid\"\n" <<
-      "Enter 2 for \"Hexagonal Dipyramid\"" << std::endl;
-   std::cout<<"Enter your value : "<<std::ends;
-   std::cin >> select_val;
-   assert(select_val >= 0 && select_val <=2);
-   // std::cout << "selected_val : " << select_val << std::endl;
-   GLFWwindow *window = initialise();
-   glEnable(GL_DEPTH_TEST);  
-   unsigned int shaderProgram = CreateShader();
-   // objects : 
-   unsigned int VBO, VAO, EBO;
-   glGenVertexArrays(1, &VAO);
-   glGenBuffers(1, &EBO);
-   glGenBuffers(1, &VBO);
-   // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-   glBindVertexArray(VAO);
+/* Initialize the OpenGL rendering properties */
+/* Add all the models to be created here */
+void initGL(GLFWwindow *window, int width, int height) {
+    /* Objects should be created before any other gl function and shaders */
+    // Create the models
 
-   glBindBuffer(GL_ARRAY_BUFFER, VBO);
-   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-   if(select_val == 0){
-      glBufferData(GL_ARRAY_BUFFER, sizeof(dpvertices), dpvertices, GL_STATIC_DRAW);
-      glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(dpindices), dpindices, GL_STATIC_DRAW);
-   }
-   else if(select_val == 1){
-      glBufferData(GL_ARRAY_BUFFER, sizeof(edpvertices), edpvertices, GL_STATIC_DRAW);
-      glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(edpindices), edpindices, GL_STATIC_DRAW);
-   }
-   else if(select_val == 2){
-      glBufferData(GL_ARRAY_BUFFER, sizeof(hdvertices), hdvertices, GL_STATIC_DRAW);
-      glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(hdindices), hdindices, GL_STATIC_DRAW);
-   }
+    ball1       = Ball(0, 0, COLOR_RED);
+
+    // Create and compile our GLSL program from the shaders
+    programID = LoadShaders("../source/shaders/shader.vert", "../source/shaders/shader.frag");
+    // Get a handle for our "MVP" uniform
+    Matrices.MatrixID = glGetUniformLocation(programID, "MVP");
 
 
-   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
-   glEnableVertexAttribArray(0);
+    reshapeWindow (window, width, height);
 
-   glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
+    // Background color of the scene
+    glClearColor (COLOR_BACKGROUND.r / 256.0, COLOR_BACKGROUND.g / 256.0, COLOR_BACKGROUND.b / 256.0, 0.0f); // R, G, B, A
+    glClearDepth (1.0f);
 
-   // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
-   // glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glEnable (GL_DEPTH_TEST);
+    glDepthFunc (GL_LEQUAL);
 
-   // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
-   // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-   // glBindVertexArray(0);
-
-   // uncomment this call to draw in wireframe polygons.
-   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-   // render loop
-   // -----------
-   while (!glfwWindowShouldClose(window))
-   {
-      // input
-      // -----
-      processInput(window);
-
-      // render
-      // ------
-      glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-      // draw our first triangle
-      glUseProgram(shaderProgram);
-      glm::mat4 model = glm::mat4(1.0f);
-      glm::mat4 view;
-      // view :
-      if(!x_pressed){
-         view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-      }
-      else {
-         traverse = glm::vec3(0,0,0);
-         view = glm::lookAt(glm::vec3(sin(glfwGetTime()) * r, 0.0, cos(glfwGetTime()) * r),
-          glm::vec3(0,0,0), cameraUp);
-      }
-      // for(int  i=0 ;i < 3;i++){
-         // std::cout << "cameraPos : " << cameraPos[i] << std::endl;
-      // }
-      glm::mat4 projection = glm::mat4(1.0f);
-      if(z_pressed){
-         model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));      // used to rotate object
-      }
-      view = glm::translate(view, traverse);                          // used for camera change
-      projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);     // for percpective
-      unsigned int modelLoc = glGetUniformLocation(shaderProgram,"model");
-      unsigned int viewLoc = glGetUniformLocation(shaderProgram, "view");
-      glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-      glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
-      glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, &projection[0][0]);
-      
-      glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-      if(select_val == 0)
-         glDrawElements(GL_TRIANGLES, sizeof(dpindices)/sizeof(dpindices[0]),GL_UNSIGNED_INT ,0);
-      else if(select_val == 1)
-         glDrawElements(GL_TRIANGLES, sizeof(edpindices)/sizeof(edpindices[0]),GL_UNSIGNED_INT ,0);
-      else if(select_val == 2)
-         glDrawElements(GL_TRIANGLES, sizeof(hdindices)/sizeof(hdindices[0]),GL_UNSIGNED_INT ,0);
-      // glBindVertexArray(0); // no need to unbind it every time
-
-      // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-      // -------------------------------------------------------------------------------
-      glfwSwapBuffers(window);
-      glfwPollEvents();
-   }
-
-   // optional: de-allocate all resources once they've outlived their purpose:
-   // ------------------------------------------------------------------------
-   glDeleteVertexArrays(1, &VAO);
-   glDeleteBuffers(1, &VBO);
-   glDeleteBuffers(1,&EBO);
-   glDeleteProgram(shaderProgram);
-
-   // glfw: terminate, clearing all previously allocated GLFW resources.
-   // ------------------------------------------------------------------
-   glfwTerminate();
-   return 0;
+    cout << "VENDOR: " << glGetString(GL_VENDOR) << endl;
+    cout << "RENDERER: " << glGetString(GL_RENDERER) << endl;
+    cout << "VERSION: " << glGetString(GL_VERSION) << endl;
+    cout << "GLSL: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << endl;
 }
 
-// process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-// ---------------------------------------------------------------------------------------------------------
-void processInput(GLFWwindow *window)
-{  
-   if((z_pressed & x_pressed)){
-      z_pressed = false;
-      x_pressed = false;
-   }
-   else if(z_pressed){
-      x_pressed = false;
-   }
-   else if(x_pressed){
-      z_pressed = false;
-   }
-   // escape part (ESC-key): 
-   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-      glfwSetWindowShouldClose(window, true);
-   // camera part (6-key):
-   if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-      cameraPos += glm::vec3(0.1f,0.0f,0.0f);
-   if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-      cameraPos -= glm::vec3(0.1f,0.0f,0.0f);
-   if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-      cameraPos += glm::vec3(0.0f,0.1f,0.0f);
-   if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
-      cameraPos -= glm::vec3(0.0f,0.1f,0.0f);
-   if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
-      cameraPos += glm::vec3(0.0f,0.0f,0.1f);
-   if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
-      cameraPos -= glm::vec3(0.0f,0.0f,0.1f);
-   // travese part (6-key): 
-   if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-      traverse += glm::vec3(0.1f,0.0f,0.0f);
-   if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-      traverse -= glm::vec3(0.1f,0.0f,0.0f);
-   if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-      traverse += glm::vec3(0.0f,0.1f,0.0f);
-   if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
-      traverse -= glm::vec3(0.0f,0.1f,0.0f);
-   if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
-      traverse += glm::vec3(0.0f,0.0f,0.1f);
-   if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
-      traverse -= glm::vec3(0.0f,0.0f,0.1f);
-   // fixed camera positions :
-   if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS){
-      cameraPos = glm::vec3(0.0f,0.0f,3.0f);
-      cameraFront = glm::vec3(0.0f,0.0f,-1.0f);
-      cameraUp = glm::vec3(0.0f,1.0f,0.0f);
-   }
-   if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS){
-      cameraPos = glm::vec3(0.0f,3.0f,0.0f);
-      cameraFront = glm::vec3(0.0f,-1.0f,0.0f);
-      cameraUp = glm::vec3(0.0f,0.0f,1.0f);
 
-   }
-   if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS){
-      cameraPos = glm::vec3(3.0f,0.0f,0.0f);
-      cameraFront = glm::vec3(-1.0f,0.0f,0.0f);
-      cameraUp = glm::vec3(0.0f,1.0f,0.0f);
-   }
+int main(int argc, char **argv) {
+    srand(time(0));
+    int width  = 600;
+    int height = 600;
 
-   // Spining part : 
-   if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
-      z_pressed = true;
-   if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS){
-      x_pressed = true;
-   }
+    window = initGLFW(width, height);
+
+    initGL (window, width, height);
+
+    /* Draw in loop */
+    while (!glfwWindowShouldClose(window)) {
+        // Process timers
+
+        if (t60.processTick()) {
+            // 60 fps
+            // OpenGL Draw commands
+            draw();
+            // Swap Frame Buffer in double buffering
+            glfwSwapBuffers(window);
+
+            tick_elements();
+            tick_input(window);
+        }
+
+        // Poll for Keyboard and mouse events
+        glfwPollEvents();
+    }
+
+    quit(window);
 }
 
-// glfw: whenever the window size changed (by OS or user resize) this callback function executes
-// ---------------------------------------------------------------------------------------------
-void framebuffer_size_callback(GLFWwindow *window, int width, int height)
-{
-   // make sure the viewport matches the new window dimensions; note that width and
-   // height will be significantly larger than specified on retina displays.
-   glViewport(0, 0, width, height);
+bool detect_collision(bounding_box_t a, bounding_box_t b) {
+    return (abs(a.x - b.x) * 2 < (a.width + b.width)) &&
+           (abs(a.y - b.y) * 2 < (a.height + b.height));
+}
+
+void reset_screen() {
+    float top    = screen_center_y + 4 / screen_zoom;
+    float bottom = screen_center_y - 4 / screen_zoom;
+    float left   = screen_center_x - 4 / screen_zoom;
+    float right  = screen_center_x + 4 / screen_zoom;
+    Matrices.projection = glm::ortho(left, right, bottom, top, 0.1f, 500.0f);
 }
