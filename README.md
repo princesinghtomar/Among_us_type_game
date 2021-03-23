@@ -1,1 +1,1 @@
-# Among_us_type_game
+# Graphic_Assignment_1
