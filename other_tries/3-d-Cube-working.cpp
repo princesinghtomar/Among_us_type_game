@@ -1,20 +1,11 @@
+
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
-#include "shapes.cpp"
-#include <assert.h>
-
-// q,w,e,r,t,y ->  camera  movement along different axis
-// a,s,d,f,g,h ->  move object along different axis
-// j,k,l -> predecided orientation
-// z -> spin object
-// x -> spin camera
-
-bool x_pressed = false;
-bool z_pressed = false;
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -22,12 +13,6 @@ void processInput(GLFWwindow *window);
 // settings
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
-const unsigned int r = 10;
-
-glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
-glm::vec3 traverse    = glm::vec3(0.0f, 0.0f,  0.0f);
 
 GLFWwindow *initialise()
 {
@@ -139,18 +124,37 @@ static unsigned int CreateShader(){
 
 int main()
 {
-   int select_val = 0;
-   std::cout << "Enter 0 For \"Decagonal Prism\" \n" << 
-      "Enter 1 for \"Elongated Square Dipyramid\"\n" <<
-      "Enter 2 for \"Hexagonal Dipyramid\"" << std::endl;
-   std::cout<<"Enter your value : "<<std::ends;
-   std::cin >> select_val;
-   assert(select_val >= 0 && select_val <=2);
-   // std::cout << "selected_val : " << select_val << std::endl;
    GLFWwindow *window = initialise();
    glEnable(GL_DEPTH_TEST);  
    unsigned int shaderProgram = CreateShader();
-   // objects : 
+
+   // set up vertex data (and buffer(s)) and configure vertex attributes
+   // ------------------------------------------------------------------
+   float vertices[] = {
+      0.5f, 0.5f, 0.5f, 1.0f, 1.0f,0.0f,        // 0
+      -0.5f, 0.5f, 0.5f, 0.0f, 1.0f,0.0f,       // 1
+      0.5f, -0.5f, 0.5f, 1.0f, 0.0f,0.0f,       // 2
+      -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,0.0f,      // 3
+      0.5f, 0.5f, -0.5f, 1.0f, 1.0f,0.0f,       // 4
+      -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,0.0f,      // 5
+      0.5f, -0.5f, -0.5f, 1.0f, 0.0f,0.0f,      // 6
+      -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,0.0f,     // 7
+   };
+   unsigned int indices[] = {
+      7,6,4,
+      4,5,7,
+      3,2,0,
+      0,1,3,
+      1,5,7,
+      7,3,1,
+      0,4,6,
+      6,2,0,
+      7,6,2,
+      2,3,7,
+      5,4,0,
+      0,1,5
+   };
+
    unsigned int VBO, VAO, EBO;
    glGenVertexArrays(1, &VAO);
    glGenBuffers(1, &EBO);
@@ -159,19 +163,10 @@ int main()
    glBindVertexArray(VAO);
 
    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-   if(select_val == 0){
-      glBufferData(GL_ARRAY_BUFFER, sizeof(dpvertices), dpvertices, GL_STATIC_DRAW);
-      glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(dpindices), dpindices, GL_STATIC_DRAW);
-   }
-   else if(select_val == 1){
-      glBufferData(GL_ARRAY_BUFFER, sizeof(edpvertices), edpvertices, GL_STATIC_DRAW);
-      glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(edpindices), edpindices, GL_STATIC_DRAW);
-   }
-   else if(select_val == 2){
-      glBufferData(GL_ARRAY_BUFFER, sizeof(hdvertices), hdvertices, GL_STATIC_DRAW);
-      glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(hdindices), hdindices, GL_STATIC_DRAW);
-   }
+   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 
    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
@@ -206,25 +201,11 @@ int main()
       // draw our first triangle
       glUseProgram(shaderProgram);
       glm::mat4 model = glm::mat4(1.0f);
-      glm::mat4 view;
-      // view :
-      if(!x_pressed){
-         view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-      }
-      else {
-         traverse = glm::vec3(0,0,0);
-         view = glm::lookAt(glm::vec3(sin(glfwGetTime()) * r, 0.0, cos(glfwGetTime()) * r),
-          glm::vec3(0,0,0), cameraUp);
-      }
-      // for(int  i=0 ;i < 3;i++){
-         // std::cout << "cameraPos : " << cameraPos[i] << std::endl;
-      // }
+      glm::mat4 view = glm::mat4(1.0f);
       glm::mat4 projection = glm::mat4(1.0f);
-      if(z_pressed){
-         model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));      // used to rotate object
-      }
-      view = glm::translate(view, traverse);                          // used for camera change
-      projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);     // for percpective
+      model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
+      view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+      projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
       unsigned int modelLoc = glGetUniformLocation(shaderProgram,"model");
       unsigned int viewLoc = glGetUniformLocation(shaderProgram, "view");
       glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -232,12 +213,7 @@ int main()
       glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, &projection[0][0]);
       
       glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-      if(select_val == 0)
-         glDrawElements(GL_TRIANGLES, sizeof(dpindices)/sizeof(dpindices[0]),GL_UNSIGNED_INT ,0);
-      else if(select_val == 1)
-         glDrawElements(GL_TRIANGLES, sizeof(edpindices)/sizeof(edpindices[0]),GL_UNSIGNED_INT ,0);
-      else if(select_val == 2)
-         glDrawElements(GL_TRIANGLES, sizeof(hdindices)/sizeof(hdindices[0]),GL_UNSIGNED_INT ,0);
+      glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(indices[0]),GL_UNSIGNED_INT ,0);
       // glBindVertexArray(0); // no need to unbind it every time
 
       // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -250,7 +226,6 @@ int main()
    // ------------------------------------------------------------------------
    glDeleteVertexArrays(1, &VAO);
    glDeleteBuffers(1, &VBO);
-   glDeleteBuffers(1,&EBO);
    glDeleteProgram(shaderProgram);
 
    // glfw: terminate, clearing all previously allocated GLFW resources.
@@ -262,70 +237,9 @@ int main()
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow *window)
-{  
-   if((z_pressed & x_pressed)){
-      z_pressed = false;
-      x_pressed = false;
-   }
-   else if(z_pressed){
-      x_pressed = false;
-   }
-   else if(x_pressed){
-      z_pressed = false;
-   }
-   // escape part (ESC-key): 
+{
    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
       glfwSetWindowShouldClose(window, true);
-   // camera part (6-key):
-   if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-      cameraPos += glm::vec3(0.1f,0.0f,0.0f);
-   if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-      cameraPos -= glm::vec3(0.1f,0.0f,0.0f);
-   if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-      cameraPos += glm::vec3(0.0f,0.1f,0.0f);
-   if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
-      cameraPos -= glm::vec3(0.0f,0.1f,0.0f);
-   if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
-      cameraPos += glm::vec3(0.0f,0.0f,0.1f);
-   if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
-      cameraPos -= glm::vec3(0.0f,0.0f,0.1f);
-   // travese part (6-key): 
-   if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-      traverse += glm::vec3(0.1f,0.0f,0.0f);
-   if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-      traverse -= glm::vec3(0.1f,0.0f,0.0f);
-   if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-      traverse += glm::vec3(0.0f,0.1f,0.0f);
-   if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
-      traverse -= glm::vec3(0.0f,0.1f,0.0f);
-   if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
-      traverse += glm::vec3(0.0f,0.0f,0.1f);
-   if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
-      traverse -= glm::vec3(0.0f,0.0f,0.1f);
-   // fixed camera positions :
-   if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS){
-      cameraPos = glm::vec3(0.0f,0.0f,3.0f);
-      cameraFront = glm::vec3(0.0f,0.0f,-1.0f);
-      cameraUp = glm::vec3(0.0f,1.0f,0.0f);
-   }
-   if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS){
-      cameraPos = glm::vec3(0.0f,3.0f,0.0f);
-      cameraFront = glm::vec3(0.0f,-1.0f,0.0f);
-      cameraUp = glm::vec3(0.0f,0.0f,1.0f);
-
-   }
-   if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS){
-      cameraPos = glm::vec3(3.0f,0.0f,0.0f);
-      cameraFront = glm::vec3(-1.0f,0.0f,0.0f);
-      cameraUp = glm::vec3(0.0f,1.0f,0.0f);
-   }
-
-   // Spining part : 
-   if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
-      z_pressed = true;
-   if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS){
-      x_pressed = true;
-   }
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
