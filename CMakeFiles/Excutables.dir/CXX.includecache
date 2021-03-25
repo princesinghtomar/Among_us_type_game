@@ -6,26 +6,12 @@
 
 #IncludeRegexTransform: 
 
-/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_0/source/main.cpp
+/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/source/main.cpp
 glad/glad.h
 -
 GLFW/glfw3.h
 -
-glm/glm.hpp
--
-glm/gtc/matrix_transform.hpp
--
-glm/gtc/type_ptr.hpp
--
 iostream
--
-shapes.cpp
-/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_0/source/shapes.cpp
-assert.h
--
-
-/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_0/source/shapes.cpp
-math.h
 -
 
 libraries/glad/include/KHR/khrplatform.h

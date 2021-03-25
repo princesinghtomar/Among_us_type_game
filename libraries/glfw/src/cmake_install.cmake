@@ -1,4 +1,4 @@
-# Install script for directory: /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_0/libraries/glfw/src
+# Install script for directory: /home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/libraries/glfw/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

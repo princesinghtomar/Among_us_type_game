@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_0/libraries/glad/src/glad.c" "/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_0/CMakeFiles/glad.dir/libraries/glad/src/glad.c.o"
+  "/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/libraries/glad/src/glad.c" "/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/CMakeFiles/glad.dir/libraries/glad/src/glad.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

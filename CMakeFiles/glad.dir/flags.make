@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = 
 
-C_INCLUDES = -I/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_0/libraries/glad/include
+C_INCLUDES = -I/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/libraries/glad/include
 
 C_FLAGS = 
 

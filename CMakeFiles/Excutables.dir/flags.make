@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DGLFW_INCLUDE_NONE
 
-CXX_INCLUDES = -I/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_0/source -I/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_0/libraries/glfw/include -I/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_0/libraries/glad/include
+CXX_INCLUDES = -I/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/source -I/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/libraries/glfw/include -I/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/libraries/glad/include
 
 CXX_FLAGS = -std=gnu++11
 

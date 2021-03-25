@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_0/libraries/glad/src/glad.c
+/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/libraries/glad/src/glad.c
 stdio.h
 -
 stdlib.h

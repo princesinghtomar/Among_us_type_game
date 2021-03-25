@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_0/source/main.cpp" "/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_0/CMakeFiles/Excutables.dir/source/main.cpp.o"
+  "/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/source/main.cpp" "/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/CMakeFiles/Excutables.dir/source/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -22,8 +22,8 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_0/libraries/glfw/src/CMakeFiles/glfw.dir/DependInfo.cmake"
-  "/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_0/CMakeFiles/glad.dir/DependInfo.cmake"
+  "/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/libraries/glfw/src/CMakeFiles/glfw.dir/DependInfo.cmake"
+  "/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/CMakeFiles/glad.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.
