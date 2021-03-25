@@ -1,10 +1,13 @@
-
-
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
+#include "shapes.cpp"
+#include <assert.h>
 #include <list>
+#include <iterator>
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -12,6 +15,12 @@ void processInput(GLFWwindow *window);
 // settings
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
+const unsigned int r = 10;
+
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+glm::vec3 traverse = glm::vec3(0.0f, 0.0f, 0.0f);
 
 #define UP 0
 #define DOWN 1
@@ -89,6 +98,34 @@ void update_labyrinth()
       }
    }
 }
+
+// int *starting_position(int size){
+//     int val = rand()%4;
+//     //Starting, Ending
+//     static int arr[4];
+//     switch (val){
+//         case 0:
+//             arr[0] = size - 1;
+//             arr[1] = rand()%size;
+//             arr[3] = rand()%size;
+//             break;
+//         case 1:
+//             arr[1] = rand()%size;
+//             arr[2] = size - 1;
+//             arr[3] = rand()%size;
+//             break;
+//         case 2:
+//             arr[0] = rand()%size;
+//             arr[2] = rand()%size;
+//             arr[3] = size - 1;
+//             break;
+//         case 3:
+//             arr[0] = rand()%size;
+//             arr[1] = size - 1;
+//             arr[3] = rand()%size;
+//     }
+//     return arr;
+// }
 
 void choose_starting()
 {
@@ -242,7 +279,6 @@ void display_options()
              << "SOLVE THE MAZE!!!" << std::endl;
 }
 
-
 GLFWwindow *initialise()
 {
    // glfw: initialize and configure
@@ -275,26 +311,32 @@ GLFWwindow *initialise()
 }
 
 const char *vertexShaderSource = "\n"
-   "#version 330 core\n"
-   "layout (location = 0) in vec3 aPos;\n"
-   "layout (location = 1) in vec3 aColor;\n"
-   "out vec3 ourColor;\n"
-   "void main()\n"
-   "{\n"
-   "  gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-   "  ourColor = aColor;\n"
-   "}\0";
+                                 "#version 330 core\n"
+                                 "layout (location = 0) in vec3 aPos;\n"
+                                 "layout (location = 1) in vec3 aColor;\n"
+                                 "out vec3 ourColor;\n"
+                                 "uniform mat4 model;\n"
+                                 "uniform mat4 view;\n"
+                                 "uniform mat4 projection;\n"
+                                 "void main()\n"
+                                 "{\n"
+                                 "  gl_Position = projection * view * model * vec4(aPos, 1.0f);\n"
+                                 "  ourColor = aColor;\n"
+                                 "}\0";
 
 const char *fragmentShaderSource = "\n"
-   "#version 330 core\n"
-   "out vec4 FragColor;\n"
-   "in vec3 ourColor;\n"
-   "void main()\n"
-   "{\n"
-   "  FragColor = vec4(ourColor, 1.0);\n"
-   "}\n\0";
+                                   "#version 330 core\n"
+                                   "out vec4 FragColor;\n"
+                                   "in vec3 ourColor;\n"
+                                   "void main()\n"
+                                   "{\n"
+                                   "  FragColor = vec4(ourColor, 1.0);\n"
+                                   "}\n\0";
 
-static unsigned int CompileShader(unsigned int type,const char *typeShaderSource ){
+const char *geometryShaderSource = "";
+
+static unsigned int CompileShader(unsigned int type, const char *typeShaderSource)
+{
    unsigned int shader = glCreateShader(type);
    glShaderSource(shader, 1, &typeShaderSource, NULL);
    glCompileShader(shader);
@@ -306,20 +348,30 @@ static unsigned int CompileShader(unsigned int type,const char *typeShaderSource
    if (!success)
    {
       glGetShaderInfoLog(shader, 512, NULL, infoLog);
-      std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"
+      std::cout << "ERROR::SHADER::" << type << " COMPILATION_FAILED\n"
                 << infoLog << std::endl;
    }
    return shader;
 }
 
-static unsigned int CreateShader(){
+static unsigned int CreateShader()
+{
    int success;
    char infoLog[512];
    unsigned int shaderProgram = glCreateProgram();
-   unsigned int vertexShader = CompileShader(GL_VERTEX_SHADER,vertexShaderSource);
-   unsigned int fragmentShader = CompileShader(GL_FRAGMENT_SHADER,fragmentShaderSource);
+   unsigned int vertexShader = CompileShader(GL_VERTEX_SHADER, vertexShaderSource);
+   unsigned int fragmentShader = CompileShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
+   unsigned int geometryShader;
+   if (geometryShaderSource != "")
+   {
+      geometryShader = CompileShader(GL_GEOMETRY_SHADER, geometryShaderSource);
+   }
    glAttachShader(shaderProgram, vertexShader);
    glAttachShader(shaderProgram, fragmentShader);
+   if (geometryShaderSource != "")
+   {
+      glAttachShader(shaderProgram, geometryShader);
+   }
    glLinkProgram(shaderProgram);
 
    // check for linking errors
@@ -332,17 +384,18 @@ static unsigned int CreateShader(){
    }
    glDeleteShader(vertexShader);
    glDeleteShader(fragmentShader);
+   if (geometryShaderSource != "")
+   {
+      glDeleteShader(geometryShader);
+   }
 
    return shaderProgram;
 }
 
 int main()
 {
-   // input_width_and_height();
-   height = width = 10;
-
+   input_width_and_height();
    display_options();
-
    grid = new GridBox[width * height];
    for (double x = 1; x < width + 2; x++)
    {
@@ -382,46 +435,63 @@ int main()
       // glVertex2f(10.0, x * 10);
       // glVertex2f(width * 10 + 10.0, x * 10);
    }
+   // R = 0.0;
+   // G = 0.0;
+   // B = 0.0;
+   // gen_maze();
+   // for (int i = 0; i < height * width; i++)
+   // {
+   //    int x = i % width;
+   //    int y = i / width;
+   //    if (grid[i].pathWay[RIGHT] == true)
+   //    {
+   //       remove_line(x, y, RIGHT);
+   //    }
+   //    if (grid[i].pathWay[UP] == true)
+   //    {
+   //       remove_line(x, y, UP);
+   //    }
+   //    if (grid[i].pathWay[DOWN] == true)
+   //    {
+   //       remove_line(x, y, DOWN);
+   //    }
+   //    if (grid[i].pathWay[LEFT] == true)
+   //    {
+   //       remove_line(x, y, LEFT);
+   //    }
+   // }
 
    GLFWwindow *window = initialise();
-
+   glEnable(GL_DEPTH_TEST);
    unsigned int shaderProgram = CreateShader();
-
-   // set up vertex data (and buffer(s)) and configure vertex attributes
-   // ------------------------------------------------------------------
-   
-   float vertices[] = {
-      // positions         // colors
-      0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
-      -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left
-      0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top 
-   };  
-
-   unsigned int VBO, VAO;
+   // objects :
+   unsigned int VBO, VAO, EBO;
    glGenVertexArrays(1, &VAO);
+   // glGenBuffers(1, &EBO);
    glGenBuffers(1, &VBO);
    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
    glBindVertexArray(VAO);
 
    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+   // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+   glBufferData(GL_ARRAY_BUFFER, sizeof(dpvertices), dpvertices, GL_STATIC_DRAW);
+   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(dpindices), dpindices, GL_STATIC_DRAW);
 
-   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6* sizeof(float), (void *)0);
+   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
    glEnableVertexAttribArray(0);
 
-   // color attribute
-   glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3* sizeof(float)));
-   glEnableVertexAttribArray(1);
+   // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
+   // glEnableVertexAttribArray(1);
 
    // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
-   glBindBuffer(GL_ARRAY_BUFFER, 0);
+   // glBindBuffer(GL_ARRAY_BUFFER, 0);
 
    // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
    // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-   glBindVertexArray(0);
+   // glBindVertexArray(0);
 
    // uncomment this call to draw in wireframe polygons.
-   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
    // render loop
    // -----------
@@ -434,12 +504,26 @@ int main()
       // render
       // ------
       glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-      glClear(GL_COLOR_BUFFER_BIT);
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
       // draw our first triangle
       glUseProgram(shaderProgram);
+      glm::mat4 model = glm::mat4(1.0f);
+      glm::mat4 view;
+
+      view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+      glm::mat4 projection = glm::mat4(1.0f);
+      view = glm::translate(view, traverse);                                                                  // used for camera change
+      projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f); // for percpective
+      // projection = glm::ortho(0.0f, (float)SCR_WIDTH, (float)SCR_HEIGHT, 0.0f, -1.0f, 1000.0f);
+      unsigned int modelLoc = glGetUniformLocation(shaderProgram, "model");
+      unsigned int viewLoc = glGetUniformLocation(shaderProgram, "view");
+      glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+      glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
+      glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, &projection[0][0]);
+
       glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-      glDrawArrays(GL_TRIANGLES, 0, 3);
+      glDrawElements(GL_TRIANGLES, sizeof(dpindices) / sizeof(dpindices[0]), GL_UNSIGNED_INT, 0);
       // glBindVertexArray(0); // no need to unbind it every time
 
       // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -452,6 +536,7 @@ int main()
    // ------------------------------------------------------------------------
    glDeleteVertexArrays(1, &VAO);
    glDeleteBuffers(1, &VBO);
+   // glDeleteBuffers(1, &EBO);
    glDeleteProgram(shaderProgram);
 
    // glfw: terminate, clearing all previously allocated GLFW resources.
@@ -464,7 +549,11 @@ int main()
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow *window)
 {
+   // escape part (ESC-key):
    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+      glfwSetWindowShouldClose(window, true);
+
+   if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
       glfwSetWindowShouldClose(window, true);
 }
 
