@@ -132,13 +132,13 @@ int main()
    // ------------------------------------------------------------------
    float vertices[] = {
        350.0f,  350.0f, 1.0f, 1.0f, 1.0f,      // 0
-      -350.0f,  350.0f, 1.0f, 1.0f, 1.0f,      // 1
        350.0f, -350.0f, 1.0f, 1.0f, 1.0f,      // 2
       -350.0f, -350.0f, 1.0f, 1.0f, 1.0f,      // 3
-       350.0f,  350.0f, 1.0f, 1.0f, 1.0f,      // 4
-      -350.0f,  350.0f, 1.0f, 1.0f, 1.0f,      // 5
-       350.0f, -350.0f, 1.0f, 1.0f, 1.0f,      // 6
-      -350.0f, -350.0f, 1.0f, 1.0f, 1.0f,      // 7
+      -350.0f,  350.0f, 1.0f, 1.0f, 1.0f,      // 1
+      //  350.0f,  350.0f, 1.0f, 1.0f, 1.0f,      // 4
+      // -350.0f,  350.0f, 1.0f, 1.0f, 1.0f,      // 5
+      //  350.0f, -350.0f, 1.0f, 1.0f, 1.0f,      // 6
+      // -350.0f, -350.0f, 1.0f, 1.0f, 1.0f,      // 7
    };
 
    unsigned int VBO, VAO;
@@ -200,7 +200,7 @@ int main()
       glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, &projection[0][0]);
       
       glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-      glDrawArrays(GL_TRIANGLES,0,9);
+      glDrawArrays(GL_LINE_LOOP,0,4);
       // glBindVertexArray(0); // no need to unbind it every time
 
       // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
