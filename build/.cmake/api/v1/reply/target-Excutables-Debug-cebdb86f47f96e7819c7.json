@@ -112,12 +112,12 @@
 	"dependencies" : 
 	[
 		{
-			"backtrace" : 2,
-			"id" : "glfw::@7d8f67159c48f691a52d"
-		},
-		{
 			"backtrace" : 3,
 			"id" : "glad::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "glfw::@7d8f67159c48f691a52d"
 		}
 	],
 	"id" : "Excutables::@6890427a1f51a3e7e1df",

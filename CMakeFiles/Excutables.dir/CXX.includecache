@@ -13,9 +13,11 @@ GLFW/glfw3.h
 -
 glm/glm.hpp
 -
-iostream
+glm/gtc/matrix_transform.hpp
 -
-list
+glm/gtc/type_ptr.hpp
+-
+iostream
 -
 
 libraries/glad/include/KHR/khrplatform.h
