@@ -1,0 +1,301 @@
+After grid 
+After defining vertices
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+ grid is open 
+After gen_maze
+x : 0 y : 0 :: 0 : R :1 L : 0 U :1 D :0
+x : 1 y : 0 :: 0 : R :0 L : 1 U :0 D :0
+x : 2 y : 0 :: 0 : R :0 L : 0 U :1 D :0
+x : 3 y : 0 :: 0 : R :1 L : 0 U :1 D :0
+x : 4 y : 0 :: 0 : R :0 L : 1 U :0 D :0
+x : 0 y : 1 :: 0 : R :0 L : 0 U :1 D :1
+x : 1 y : 1 :: 0 : R :0 L : 0 U :1 D :0
+x : 2 y : 1 :: 0 : R :1 L : 0 U :1 D :1
+x : 3 y : 1 :: 0 : R :0 L : 1 U :0 D :1
+x : 4 y : 1 :: 0 : R :1 L : 0 U :1 D :0
+x : 0 y : 2 :: 0 : R :1 L : 1 U :1 D :1
+x : 1 y : 2 :: 0 : R :0 L : 1 U :0 D :1
+x : 2 y : 2 :: 0 : R :1 L : 0 U :1 D :1
+x : 3 y : 2 :: 0 : R :1 L : 1 U :0 D :0
+x : 4 y : 2 :: 0 : R :0 L : 1 U :0 D :1
+x : 0 y : 3 :: 0 : R :1 L : 0 U :1 D :1
+x : 1 y : 3 :: 0 : R :1 L : 1 U :1 D :0
+x : 2 y : 3 :: 0 : R :1 L : 1 U :0 D :1
+x : 3 y : 3 :: 0 : R :1 L : 1 U :1 D :0
+x : 4 y : 3 :: 0 : R :0 L : 1 U :0 D :0
+x : 0 y : 4 :: 0 : R :0 L : 0 U :0 D :1
+x : 1 y : 4 :: 0 : R :0 L : 0 U :0 D :1
+x : 2 y : 4 :: 0 : R :1 L : 0 U :0 D :0
+x : 3 y : 4 :: 0 : R :1 L : 1 U :0 D :1
+x : 4 y : 4 :: 0 : R :0 L : 1 U :0 D :0
+inside gen maze loop : 0
+inside gen maze loop : 1
+inside gen maze loop : 2
+inside gen maze loop : 3
+inside gen maze loop : 4
+inside gen maze loop : 5
+inside gen maze loop : 6
+inside gen maze loop : 7
+inside gen maze loop : 8
+inside gen maze loop : 9
+inside gen maze loop : 10
+inside gen maze loop : 11
+inside gen maze loop : 12
+inside gen maze loop : 13
+inside gen maze loop : 14
+inside gen maze loop : 15
+inside gen maze loop : 16
+inside gen maze loop : 17
+inside gen maze loop : 18
+inside gen maze loop : 19
+inside gen maze loop : 20
+inside gen maze loop : 21
+inside gen maze loop : 22
+inside gen maze loop : 23
+inside gen maze loop : 24
+After create_maze 
+sizeof(grid)/sizeof(grid[0]) : 1
+count_vertices : 500
