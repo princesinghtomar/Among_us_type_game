@@ -126,6 +126,9 @@ int main(){
             }
         }
     }
+    auto temp = grid2.back();
+    grid2.push_back(temp);
+    j++;
     std::cout << "Here are vertices : \n";
     int lamda = 0;
     for(auto k = grid2.begin();k!=grid2.end();k++){
