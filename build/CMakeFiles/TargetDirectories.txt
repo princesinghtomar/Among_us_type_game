@@ -1,0 +1,9 @@
+/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/build/CMakeFiles/rebuild_cache.dir
+/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/build/CMakeFiles/edit_cache.dir
+/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/build/CMakeFiles/glad.dir
+/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/build/CMakeFiles/Excutables.dir
+/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/build/libraries/glfw/CMakeFiles/rebuild_cache.dir
+/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/build/libraries/glfw/CMakeFiles/edit_cache.dir
+/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/build/libraries/glfw/src/CMakeFiles/rebuild_cache.dir
+/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/build/libraries/glfw/src/CMakeFiles/edit_cache.dir
+/home/bhaeyan/Resources_sem4/Graphic/Assignment/Graphic_Assignment_1/Among_us_type_game/build/libraries/glfw/src/CMakeFiles/glfw.dir

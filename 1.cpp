@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
-int height = 10;
-int width = 10;
+int height = 20;
+int width = 20;
 bool **grid;
-int x_width = 60;
-int y_width = 60;
+int x_width = 30;
+int y_width = 30;
 void set_path(int x, int y){
     grid[y][x] = false;
 }
@@ -93,27 +93,35 @@ int main(){
         }
         std::cout << "\n";
     }
-    std::vector<std::tuple<int,int,int,int,int>> grid2;
     int j=0;
+    std::vector<std::tuple<int,int,int,int,int>> grid2;
+    // insert box co-ordinates :) you can use push front is push back not used :)
+    grid2.push_back(std::tuple<int,int,int,int,int>(-300,360,0,0,1));
+    grid2.push_back(std::tuple<int,int,int,int,int>( 330,360,0,0,1));
+    grid2.push_back(std::tuple<int,int,int,int,int>( 330,290.01,0,0,1));
+    grid2.push_back(std::tuple<int,int,int,int,int>(-300,360,0,0,1));
+    grid2.push_back(std::tuple<int,int,int,int,int>(-300,290.01,0,0,1));
+    grid2.push_back(std::tuple<int,int,int,int,int>( 330,290.01,0,0,1));
+    j+=6;
     for(int y=0;y<height;y++){
         for(int x=0;x<width;x++){
             // std::cout<<"timerun : "<<grid[y][x]<< " " <<std::endl;
-            if(grid[y][x]){
-                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + x*x_width,y*y_width-320,1,1,1));  // (-,+)
-                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + (x+1)*x_width,y*y_width-320,1,1,1));  // (+,+)
-                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + (x+1)*x_width,(y+1)*y_width-320,1,1,1));  // (+,-)
-                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + x*x_width,y*y_width-320,1,1,1));  // (-,+)
-                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + x*x_width,(y+1)*y_width-320,1,1,1));  // (-,-)
-                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + (x+1)*x_width,(y+1)*y_width-320,1,1,1));  // (+,-)
+            if(!grid[y][x]){
+                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + x*x_width,y*y_width-340,1,1,1));  // (-,+)
+                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + (x+1)*x_width,y*y_width-340,1,1,1));  // (+,+)
+                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + (x+1)*x_width,(y+1)*y_width-340,1,1,1));  // (+,-)
+                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + x*x_width,y*y_width-340,1,1,1));  // (-,+)
+                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + x*x_width,(y+1)*y_width-340,1,1,1));  // (-,-)
+                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + (x+1)*x_width,(y+1)*y_width-340,1,1,1));  // (+,-)
                 j+=6;
             }
             else{
-                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + x*x_width,y*y_width-320,0,0,0));  // (-,+)
-                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + (x+1)*x_width,y*y_width-320,0,0,0));  // (+,+)
-                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + (x+1)*x_width,(y+1)*y_width-320,0,0,0));  // (+,-)
-                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + x*x_width,y*y_width-320,0,0,0));  // (-,+)
-                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + x*x_width,(y+1)*y_width-320,0,0,0));  // (-,-)
-                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + (x+1)*x_width,(y+1)*y_width-320,0,0,0));  // (+,-)
+                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + x*x_width,y*y_width-340,0,0,0));  // (-,+)
+                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + (x+1)*x_width,y*y_width-340,0,0,0));  // (+,+)
+                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + (x+1)*x_width,(y+1)*y_width-340,0,0,0));  // (+,-)
+                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + x*x_width,y*y_width-340,0,0,0));  // (-,+)
+                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + x*x_width,(y+1)*y_width-340,0,0,0));  // (-,-)
+                grid2.push_back(std::tuple<int,int,int,int,int>(-300 + (x+1)*x_width,(y+1)*y_width-340,0,0,0));  // (+,-)
                 j+=6;
             }
         }
