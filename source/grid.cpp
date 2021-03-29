@@ -108,6 +108,8 @@ std::vector<std::tuple<int,int,int,int,int>> crm(){
     }
     grid2.push_back(grid2.back());
     // player among us art : 
+    
+    //helmet part :
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 14.0,  260 + 23.0, 0.0, 0.0, 1.0));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 14.0,  260 + 19.0, 0.0, 0.0, 1.0));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 22.0,  260 + 19.0, 0.0, 0.0, 1.0));
@@ -120,6 +122,8 @@ std::vector<std::tuple<int,int,int,int,int>> crm(){
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 13.0,  260 + 22.0, 0.0, 0.0, 1.0));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 23.0,  260 + 22.0, 0.0, 0.0, 1.0));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 23.0,  260 + 20.0, 0.0, 0.0, 1.0));
+    
+    // main body part :
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 8.0,   260 + 26.0, 1.0, 0.0, 1.0));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 8.0,   260 + 10.0, 1.0, 0.0, 1.0));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 20.0,  260 + 10.0, 1.0, 0.0, 1.0));
@@ -138,6 +142,8 @@ std::vector<std::tuple<int,int,int,int,int>> crm(){
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 9.0,   260 + 27.0, 1.0, 0.0, 1.0));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 19.0,  260 + 27.0, 1.0, 0.0, 1.0));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 19.0,  260 + 17.0, 1.0, 0.0, 1.0));
+    
+    // legs :
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 8.0,   260 + 10.0, 1.0, 0.0, 1.0));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 8.0,   260 + 4.0,  1.0, 0.0, 1.0));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 12.0,  260 + 4.0,  1.0, 0.0, 1.0));
@@ -150,12 +156,14 @@ std::vector<std::tuple<int,int,int,int,int>> crm(){
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 16.0,  260 + 10.0, 1.0, 0.0, 1.0));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 20.0,  260 + 10.0, 1.0, 0.0, 1.0));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 20.0,  260 + 4.0,  1.0, 0.0, 1.0));
+    
+    // bagpack :
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 6.0,   260 + 23.0, 1.0, 0.0, 0.0));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 6.0,   260 + 10.0, 1.0, 0.0, 0.0));
-    grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 7.0,   260 + 10.0, 1.0, 0.0, 0.0));
+    grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 8.0,   260 + 10.0, 1.0, 0.0, 0.0));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 6.0,   260 + 23.0, 1.0, 0.0, 0.0));
-    grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 7.0,   260 + 23.0, 1.0, 0.0, 0.0));
-    grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 7.0,   260 + 10.0, 1.0, 0.0, 0.0));
+    grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 8.0,   260 + 23.0, 1.0, 0.0, 0.0));
+    grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 8.0,   260 + 10.0, 1.0, 0.0, 0.0));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 5.0,   260 + 22.0, 1.0, 0.0, 0.0));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 5.0,   260 + 11.0, 1.0, 0.0, 0.0));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 6.0,   260 + 11.0, 1.0, 0.0, 0.0));
