@@ -11,12 +11,13 @@ int life = 100;
 bool light = false;
 int total_tasks = 2;
 int completed_tasks = 0;
-int timer = 0;
+float timer = 1000;
+float lastFrame = glfwGetTime();
 
 GLint othermodeldata[3][2] = {
    {0,2653},
-   {2653,6}, // player
-   {2659,6} // imposter
+   {2653,54}, // player
+   {2707,54} // imposter
 };
 
 glm::vec2 modelpositions[] = {
@@ -211,6 +212,12 @@ int main()
    // -----------
    while (!glfwWindowShouldClose(window))
    {
+      // Frames :
+      // Currently not much needed 
+      float currentFrame = glfwGetTime();
+      float deltaTime = currentFrame - lastFrame;
+      lastFrame = currentFrame;
+      timer -= deltaTime;
       // input
       // -----
       processInput(window);
