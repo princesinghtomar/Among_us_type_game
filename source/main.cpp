@@ -7,6 +7,24 @@ void processInput(GLFWwindow *window);
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
 
+int life = 100;
+bool light = false;
+int total_tasks = 2;
+int completed_tasks = 0;
+int timer = 0;
+
+GLint othermodeldata[3][2] = {
+   {0,2653},
+   {2653,6}, // player
+   {2659,6} // imposter
+};
+
+glm::vec2 modelpositions[] = {
+   glm::vec2(0.0f, 0.0f),     // maze center location
+   glm::vec2(0.0f,0.0f), // player starting position also can be used to calculate index of the box currently present
+   glm::vec2(330.0,290.0)    // imposter starting position to be decided later based on last open box
+};
+
 GLFWwindow *initialise()
 {
    // glfw: initialize and configure
@@ -118,6 +136,7 @@ static unsigned int CreateShader(){
 int main()
 {
    srand(time(0));
+   float *vertices = rets();
    GLFWwindow *window = initialise();
    glEnable(GL_DEPTH_TEST);  
    unsigned int shaderProgram = CreateShader();
@@ -137,7 +156,12 @@ int main()
    //    -265.0,-345.0,1.0,0.0,1.0,
    // };
 
-   float *vertices = rets();
+   // for(int y=0;y<height;y++){
+   //    for(int x=0;x<width;x++){
+   //       std::cout << grid[y][x];
+   //    }
+   //    std::cout << "\n";
+   // }
 
    int vsize = 0;
    while(vertices[vsize++]!=10000);
@@ -145,25 +169,13 @@ int main()
    int length_needed = vsize;
    vsize /= 5;
 
-   glm::vec2 modelpositions[] = {
-      glm::vec2( 0.0f, 0.0f),     // maze center location
-      glm::vec2(0.0f,0.0f), // player starting position also can be used to calculate index of the box currently present
-      glm::vec2(330.0,290.0)    // imposter starting position to be decided later based on last open box
-   };
-
-   std::cout<<"hello " << vertices[2653*5+1] <<std::endl;
-
-   GLint othermodeldata[3][2] = {
-      {0,2653},
-      {2653,6}, // player
-      {2659,6} // imposter
-   };
-
+   // std::cout<<"hello " << vertices[2653*5+1] <<std::endl;
+   
    // std::cout << " >> " <<sizeof(modelpositions)/sizeof(modelpositions[0]) << std::endl;
 
    // exit(0);
 
-   std::cout << sizeof(&vertices) << " : " <<vsize<< std::endl;
+   // std::cout << sizeof(&vertices) << " : " <<vsize<< std::endl;
 
    unsigned int VBO, VAO;
    glGenVertexArrays(1, &VAO);
@@ -177,7 +189,6 @@ int main()
 
    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
    // glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
 
    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
    glEnableVertexAttribArray(0);
@@ -195,6 +206,7 @@ int main()
    // uncomment this call to draw in wireframe polygons.
    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+   // std::cout << modelpositions[1].x << std::endl;
    // render loop
    // -----------
    while (!glfwWindowShouldClose(window))
@@ -255,8 +267,44 @@ int main()
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow *window)
 {
-   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
       glfwSetWindowShouldClose(window, true);
+   if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
+      int index_x = abs(modelpositions[1].x/x_width) ;
+      int index_y = height - abs(modelpositions[1].y/y_width) - 1 + 1;
+      if(index_y >= 0 && index_y < height){
+         if(!grid[index_y][index_x]){
+            modelpositions[1].y += y_width;
+         }
+      }
+   }
+   if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
+      int index_x = abs(modelpositions[1].x/x_width);
+      int index_y = height - abs(modelpositions[1].y/y_width) - 1 -1;
+      if(index_y<height && index_y >= 0){
+         if(!grid[index_y][index_x]){
+            modelpositions[1].y -= y_width;
+         }
+      }
+   }
+   if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
+      int index_x = abs(modelpositions[1].x/x_width) -1;
+      int index_y = height - abs(modelpositions[1].y/y_width)-1;
+      if(index_x >= 0 && index_x < width){
+         if(!grid[index_y][index_x]){
+            modelpositions[1].x -= x_width;
+         }
+      }
+   }
+   if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
+      int index_x = abs(modelpositions[1].x/x_width) +1;
+      int index_y = height - abs(modelpositions[1].y/y_width) - 1;
+      if(index_x >= 0 && index_x < width){
+         if(!grid[index_y][index_x]){
+            modelpositions[1].x += x_width;
+         }
+      }
+   }
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
