@@ -151,11 +151,11 @@ int main()
       glm::vec2(330.0,290.0)    // imposter starting position to be decided later based on last open box
    };
 
-   // std::cout<<"hello " << vertices[2653*5+1] <<std::endl;
+   std::cout<<"hello " << vertices[2653*5+1] <<std::endl;
 
    GLint othermodeldata[3][2] = {
       {0,2653},
-      {0,6}, // player
+      {2653,6}, // player
       {2659,6} // imposter
    };
 

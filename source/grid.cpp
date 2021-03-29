@@ -11,7 +11,6 @@ bool **grid;
 int x_width = 30;
 int y_width = 30;
 int array_fordistincetion[3] = {0,0,0};
-// float *vertices;
 void set_path(int x, int y){
     grid[y][x] = false;
 }
@@ -31,7 +30,6 @@ bool is_wall(int x,int y){
 
 void create_maze(int x,int y){
     set_path(x,y);
-    // int all_directions[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
     std::vector<std::tuple<int,int>> all_directions;
     all_directions.push_back(std::tuple<int,int>( 1 , 0));
     all_directions.push_back(std::tuple<int,int>(-1 , 0));
@@ -80,40 +78,16 @@ std::vector<std::tuple<int,int,int,int,int>> crm(){
             grid[y][x] = true;
         }
     }
-    // std::tuple<int,int> **grid1;
-    // grid1 = new std::tuple<int,int>*[height];
-    // for(int y=0;y<height;y++){
-    //     grid1[y] = new std::tuple<int,int>[width];
-    //     for(int x=0;x<width;x++){
-    //         grid1[y][x] = std::tuple<int,int>(y*30+5,-300 + x*30);
-    //     }
-    // }
     create_maze(10,10);
-    // for(int y=0;y<height;y++){
-    //     for(int x=0;x<width;x++){
-    //         std::cout << grid[y][x];
-    //     }
-    //     std::cout << "\n";
-    // }
-    // for(int y=0;y<height;y++){
-    //     for(int x=0;x<width;x++){
-    //         std::cout << "("<< std::get<0>(grid1[y][x])<<","<<std::get<1>(grid1[y][x])<<"),\t";
-    //     }
-    //     std::cout << "\n";
-    // }
-    int j=0;
     std::vector<std::tuple<int,int,int,int,int>> grid2;
-    // insert box co-ordinates :) you can use push front is push back not used :)
     grid2.push_back(std::tuple<int,int,int,int,int>(-300,360,0,0,1));
     grid2.push_back(std::tuple<int,int,int,int,int>( 330,360,0,0,1));
     grid2.push_back(std::tuple<int,int,int,int,int>( 330,290.01,0,0,1));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300,360,0,0,1));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300,290.01,0,0,1));
     grid2.push_back(std::tuple<int,int,int,int,int>( 330,290.01,0,0,1));
-    j+=6;
     for(int y=0;y<height;y++){
         for(int x=0;x<width;x++){
-            // std::cout<<"timerun : "<<grid[y][x]<< " " <<std::endl;
             if(!grid[y][x]){
                 grid2.push_back(std::tuple<int,int,int,int,int>(-300 + x*x_width,y*y_width-340,1,1,1));  // (-,+)
                 grid2.push_back(std::tuple<int,int,int,int,int>(-300 + (x+1)*x_width,y*y_width-340,1,1,1));  // (+,+)
@@ -121,7 +95,6 @@ std::vector<std::tuple<int,int,int,int,int>> crm(){
                 grid2.push_back(std::tuple<int,int,int,int,int>(-300 + x*x_width,y*y_width-340,1,1,1));  // (-,+)
                 grid2.push_back(std::tuple<int,int,int,int,int>(-300 + x*x_width,(y+1)*y_width-340,1,1,1));  // (-,-)
                 grid2.push_back(std::tuple<int,int,int,int,int>(-300 + (x+1)*x_width,(y+1)*y_width-340,1,1,1));  // (+,-)
-                j+=6;
             }
             else{
                 grid2.push_back(std::tuple<int,int,int,int,int>(-300 + x*x_width,y*y_width-340,0,0,0));  // (-,+)
@@ -130,27 +103,16 @@ std::vector<std::tuple<int,int,int,int,int>> crm(){
                 grid2.push_back(std::tuple<int,int,int,int,int>(-300 + x*x_width,y*y_width-340,0,0,0));  // (-,+)
                 grid2.push_back(std::tuple<int,int,int,int,int>(-300 + x*x_width,(y+1)*y_width-340,0,0,0));  // (-,-)
                 grid2.push_back(std::tuple<int,int,int,int,int>(-300 + (x+1)*x_width,(y+1)*y_width-340,0,0,0));  // (+,-)
-                j+=6;
             }
         }
     }
-    // auto temp = grid2.back();
     grid2.push_back(grid2.back());
-    j++;
-    // std::cout << "Here are vertices : \n";
-    // int lamda = 0;
-    // for(auto k = grid2.begin();k!=grid2.end();k++){
-    //     // if(lamda%6==0){
-    //     //     lamda = 0;
-    //     //     std::cout <<"\n"; 
-    //     // }
-    //     std::cout <<std::get<0>(*k)<<".0,"<<std::get<1>(*k)<<".0,"<<std::get<2>(*k)<<".0,"<<std::get<3>(*k)<<".0,"<<std::get<4>(*k)<<".0,\n";
-    //     j++;
-    //     // lamda++;
-    // }
-    // std::cout <<"\n\n"<< grid2.size() << " : " << j << std::endl;
-    // std::cout <<"\n\n";
-    // std::cout << printing();
+    grid2.push_back(std::tuple<int,int,int,int,int>(-265.0,-315.0,1.0,0.0,1.0));
+    grid2.push_back(std::tuple<int,int,int,int,int>(-295.0,-345.0,1.0,0.0,1.0));
+    grid2.push_back(std::tuple<int,int,int,int,int>(-265.0,-345.0,1.0,0.0,1.0));
+    grid2.push_back(std::tuple<int,int,int,int,int>(-295.0,-315.0,1.0,0.0,1.0));
+    grid2.push_back(std::tuple<int,int,int,int,int>(-295.0,-345.0,1.0,0.0,1.0));
+    grid2.push_back(std::tuple<int,int,int,int,int>(-265.0,-345.0,1.0,0.0,1.0));
     return grid2;
 }
 
@@ -160,7 +122,6 @@ float* rets(){
     for(int i=0 ;i<1000000;i++){
         vertices[i] = 10000;
     }
-    // std::cout<<sizeof(vertices)/sizeof(vertices[0]) << std::endl;
     int j=0;
     int p=0;
     for(auto k = grid2.begin();k!=grid2.end();k++){
@@ -169,21 +130,10 @@ float* rets(){
         vertices[j++] = float(std::get<2>(*k));
         vertices[j++] = float(std::get<3>(*k));
         vertices[j++] = float(std::get<4>(*k));
-        // std::cout <<std::get<0>(*k)<<".0,"<<std::get<1>(*k)<<".0,"<<std::get<2>(*k)<<".0,"<<std::get<3>(*k)<<".0,"<<std::get<4>(*k)<<".0,\n";
-        // lamda++;
         p++;
     }
     int i=0;
     while(vertices[i++]!=10000);
     i--;
-    // std::cout << grid2.size() << " : " << j << std::endl;
-    // std::cout<<"i : " << i << " | j : " << j << " | p : " << p <<std::endl;
     return vertices;
 }
-// int main(){
-//     float *kapa = rets();
-//     int i=0;
-//     while(kapa[i++]!=10000);
-//     i--;
-//     // std::cout << "i : " << i << std::endl;
-// }
