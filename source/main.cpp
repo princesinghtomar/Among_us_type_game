@@ -23,7 +23,7 @@ GLint othermodeldata[3][2] = {
 glm::vec2 modelpositions[] = {
    glm::vec2(0.0f, 0.0f),     // maze center location
    glm::vec2(0.0f,0.0f), // player starting position also can be used to calculate index of the box currently present
-   glm::vec2(330.0,290.0)    // imposter starting position to be decided later based on last open box
+   glm::vec2(0.0f,0.0f)    // imposter starting position to be decided later based on last open box
 };
 
 GLFWwindow *initialise()
@@ -243,6 +243,9 @@ int main()
          glm::mat4 model = glm::mat4(1.0f);
          if(k==1){
             model = glm::translate(model,glm::vec3(modelpositions[k],0.01f));
+         }
+         else if(k == 2){
+            model = glm::translate(model,glm::vec3(0.0f,0.0f,0.02f));
          }
          // model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
          unsigned int modelLoc = glGetUniformLocation(shaderProgram,"model");
