@@ -11,6 +11,9 @@ bool **grid;
 int x_width = 30;
 int y_width = 30;
 int array_fordistincetion[3] = {0,0,0};
+
+std::vector<std::tuple<int,int>>chosing_vector;
+
 void set_path(int x, int y){
     grid[y][x] = false;
 }
@@ -390,8 +393,31 @@ std::vector<std::tuple<int,int,int,int,int>> crm(){
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 , 260, 0, 0.0f, 1.0));  // (-,-)
     grid2.push_back(std::tuple<int,int,int,int,int>(-270 , 260, 0, 0.0f, 1.0));  // (+,-)
 
+    float pi = 4*acos(0.0) + 0.2;
+    float radius = 10;
+    float i = 0.0;
+    int j=1;
+    while(i<pi){
+        if(j%3==0){
+            grid2.push_back(std::tuple<int,int,int,int,int>(-285 , 275, 1.0f, 0.0f, 1.0));  // (+,-)
+        }
+        grid2.push_back(std::tuple<int,int,int,int,int>(-285 + radius*cos(i) , 275 + radius*sin(i) , 1.0f, 0.0f, 1.0));  // (+,-)
+        i+=0.2;
+        j+=1;
+    }
     
     return grid2;
+}
+
+void abd(){
+    for(int y=0;y<height;y++){
+        for(int x=0;x<width;x++){
+           if(!grid[y][x]){
+               chosing_vector.push_back(std::tuple<int,int>(x,y));
+           }
+        }
+    }
+    std::random_shuffle(chosing_vector.begin(),chosing_vector.end());
 }
 
 float* rets(){
@@ -413,5 +439,9 @@ float* rets(){
     int i=0;
     while(vertices[i++]!=10000);
     i--;
+    abd();
+    // for(auto i = chosing_vector.begin();i!=chosing_vector.end();i++){
+    //     std::cout << std::get<0>(*i) << " " << std::get<0>(*i) << std::endl;
+    // }
     return vertices;
 }

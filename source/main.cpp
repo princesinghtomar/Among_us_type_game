@@ -10,6 +10,8 @@ const unsigned int SCR_HEIGHT = 720;
 int life = 100;
 bool light = false;
 int total_tasks = 2;
+bool t1 = false;
+bool t2 = false;
 int completed_tasks = 0;
 float timer = 1000;
 float lastFrame = glfwGetTime();
@@ -67,13 +69,14 @@ void create_print_text(unsigned int shaderProgram){
    }
 }
 
-GLint othermodeldata[6][2] = {
+GLint othermodeldata[7][2] = {
    {0,2653},
    {2653,54}, // player
    {2707,54}, // imposter
    {2883,6},  // task 1
    {2883,6},  // task 2
-   {2889,6}   // Exit
+   {2889,6},   // Exit
+   // {2895,44} // circle button
 };
 
 glm::vec3 modelpositions[] = {
@@ -82,7 +85,8 @@ glm::vec3 modelpositions[] = {
    glm::vec3(600.0f,-600.0f,0.2f),    // imposter starting position to be decided later based on last open box
    glm::vec3(600.0f,0.0f,0.001f),
    glm::vec3(0.0f,-600.0f,0.001f),
-   glm::vec3(600.0f,-600.0f,0.001f)
+   glm::vec3(600.0f,-600.0f,0.001f),
+   // glm::vec3(0.0f,0.0f,0.4f),
 };
 
 GLFWwindow *initialise()
@@ -207,6 +211,30 @@ void imposter_start(){
    }
 }
 
+void check_player(){
+   if(modelpositions[1].x == 600 && modelpositions[1].y == 0){
+      if(!t1){
+         t1 = true;
+         if(completed_tasks < total_tasks)
+            completed_tasks+=1;
+      }
+   }
+   if(modelpositions[1].x == 0 && modelpositions[1].y <=-600){
+      if(!t2){
+         t2 = true;
+         if(completed_tasks < total_tasks)
+            completed_tasks+=1;
+      }
+   }
+   if(modelpositions[1].x == 600 && modelpositions[1].y <= -600){
+      if(completed_tasks >= total_tasks){
+         // win
+         exit(0);
+      }
+   }
+
+}
+
 int main()
 {
    srand(time(0));
@@ -250,7 +278,7 @@ int main()
 
    // exit(0);
 
-   // std::cout << sizeof(&vertices) << " : " <<vsize<< std::endl;
+   std::cout << sizeof(&vertices) << " : " <<vsize<< std::endl;
 
    unsigned int VBO, VAO;
    glGenVertexArrays(1, &VAO);
@@ -292,6 +320,10 @@ int main()
       float deltaTime = currentFrame - lastFrame;
       lastFrame = currentFrame;
       timer -= deltaTime;
+      if(timer <= 0){
+         // times up
+         exit(0);
+      }
       // input
       // -----
       processInput(window);
@@ -390,6 +422,8 @@ void processInput(GLFWwindow *window)
          }
       }
    }
+   std::cout<< "x : " << modelpositions[1].x << " |  y : " << modelpositions[1].y << std::endl;
+   check_player();
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
