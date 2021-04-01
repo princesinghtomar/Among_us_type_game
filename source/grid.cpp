@@ -405,17 +405,29 @@ std::vector<std::tuple<int,int,int,int,int>> crm(){
         i+=0.2;
         j+=1;
     }
+
+    // some power up
+    grid2.push_back(std::tuple<int,int,int,int,int>(-295 , 285, 1.0f, 1.0f, 0.0));
+    grid2.push_back(std::tuple<int,int,int,int,int>(-275 , 285, 1.0f, 1.0f, 0.0));
+    grid2.push_back(std::tuple<int,int,int,int,int>(-275 , 265, 1.0f, 1.0f, 0.0));
+    grid2.push_back(std::tuple<int,int,int,int,int>(-295 , 285, 1.0f, 1.0f, 0.0));
+    grid2.push_back(std::tuple<int,int,int,int,int>(-295 , 265, 1.0f, 1.0f, 0.0));
+    grid2.push_back(std::tuple<int,int,int,int,int>(-275 , 265, 1.0f, 1.0f, 0.0));
+    // some other power up
+    grid2.push_back(std::tuple<int,int,int,int,int>(-295 , 285, 1.0f, 0.0f, 1.0));  // (-,+)
+    grid2.push_back(std::tuple<int,int,int,int,int>(-275 , 285, 1.0f, 0.0f, 1.0));  // (-,+)
+    grid2.push_back(std::tuple<int,int,int,int,int>(-275 , 265, 1.0f, 0.0f, 1.0));  // (-,+)
     
     return grid2;
 }
 
 void abd(){
-    for(int y=0;y<height;y++){
-        for(int x=0;x<width;x++){
-            std::cout <<grid[y][x];
-        }
-        std::cout << "\n";
-    }
+    // for(int y=0;y<height;y++){
+    //     for(int x=0;x<width;x++){
+    //         std::cout <<grid[y][x];
+    //     }
+    //     std::cout << "\n";
+    // }
     for(int y=0;y<height;y++){
         for(int x=0;x<width;x++){
            if(grid[y][x] == false){

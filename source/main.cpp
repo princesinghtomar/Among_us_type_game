@@ -212,15 +212,22 @@ void imposter_start(){
    }
 }
 
-GLint power_desc[1][2] = {
-   {2895,44} // circle button
+GLint power_desc[3][2] = {
+   {2895,44},  // circle button
+   {2939,6},   // obstacle
+   {2945,3}    // powerup
 };
 
-glm::vec3 power_positions[1]={
+glm::vec3 power_positions[3]={
+   glm::vec3(0.0f,0.0f,0.1f),
+   glm::vec3(0.0f,0.0f,0.1f),
    glm::vec3(0.0f,0.0f,0.1f)
+   
 };
 
 bool usedpower[] = {
+   false,
+   false,
    false
 };
 
@@ -247,9 +254,19 @@ void check_player(){
    }
    for(int i=0;i<sizeof(power_positions)/sizeof(power_positions[0]);i++){
       if(modelpositions[1].x == power_positions[i].x && modelpositions[1].y == power_positions[i].y){
-         usedpower[i] = true;
+         if(i!=2){
+            usedpower[i] = true;
+            score += 50;
+         }
+         if(i==2){
+            score -= 30;
+         }
       }
    }
+   // if(modelpositions[1].x == modelpositions[2].x && modelpositions[1].y == modelpositions[2].y){
+      // // shit thats imposter
+      // exit(0);
+   // }
 
 }
 
@@ -263,6 +280,7 @@ void choose(){
       else{
          break;
       }
+      j++;
    }
 }
 
@@ -271,13 +289,7 @@ void power(unsigned int shaderProgram){
    for(int k=0;k<sizeof(power_positions)/sizeof(power_positions[0]);k++){
       if(!usedpower[k]){
          glm::mat4 model = glm::mat4(1.0f);
-         // if(k==1){
          model = glm::translate(model,power_positions[k]);
-         // }
-         // else if(k == 2){
-            // model = glm::translate(model,glm::vec3(modelpositions[k],0.02f));
-         // }
-         // model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
          unsigned int modelLoc = glGetUniformLocation(shaderProgram,"model");
          glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
          glDrawArrays(GL_TRIANGLES,power_desc[k][0],power_desc[k][1]);
@@ -301,11 +313,11 @@ int main()
 
    // std::cout<<"hello " << vertices[2653*5+1] <<std::endl;
    
-   std::cout << " >> " <<sizeof(modelpositions)/sizeof(modelpositions[0]) << std::endl;
+   // std::cout << " >> " <<sizeof(modelpositions)/sizeof(modelpositions[0]) << std::endl;
 
    // exit(0);
 
-   std::cout << sizeof(&vertices) << " : " <<vsize<< std::endl;
+   // std::cout << sizeof(&vertices) << " : " <<vsize<< std::endl;
 
    unsigned int VBO, VAO;
    glGenVertexArrays(1, &VAO);
@@ -349,7 +361,7 @@ int main()
       lastFrame = currentFrame;
       timer -= deltaTime;
       if(int(timer)%20==0){
-         score --;
+         score--;
       }
       if(timer <= 0){
          // times up
