@@ -227,9 +227,9 @@ void imposter_start()
 }
 
 GLint power_desc[3][2] = {
-    {2895, 44}, // circle button
-    {2939, 6},  // obstacle
-    {2945, 3}   // powerup
+    {2939, 6},  // circle button
+    {2954, 24}, // powerup
+    {2945, 9}   // obstacle
 };
 
 glm::vec3 power_positions[3] = {
@@ -284,18 +284,20 @@ void check_player()
          if (i == 2)
          {
             score -= 30;
-            life -=10;
-            if(life < 0){
-               // you loose 
+            life -= 10;
+            if (life < 0)
+            {
+               // you loose
                exit(0);
             }
          }
       }
    }
-   // if(modelpositions[1].x == modelpositions[2].x && modelpositions[1].y == modelpositions[2].y){
-   // // shit thats imposter
-   // exit(0);
-   // }
+   if (modelpositions[1].x == modelpositions[2].x && modelpositions[1].y == modelpositions[2].y)
+   {
+      // shit thats imposter
+      exit(0);
+   }
 }
 
 void choose()
@@ -394,11 +396,11 @@ int main()
 
    // std::cout<<"hello " << vertices[2653*5+1] <<std::endl;
 
-   // std::cout << " >> " <<sizeof(modelpositions)/sizeof(modelpositions[0]) << std::endl;
+   std::cout << " >> " << sizeof(modelpositions) / sizeof(modelpositions[0]) << std::endl;
 
    // exit(0);
 
-   // std::cout << sizeof(&vertices) << " : " <<vsize<< std::endl;
+   std::cout << sizeof(&vertices) << " : " << vsize << std::endl;
 
    unsigned int VBO, VAO;
    glGenVertexArrays(1, &VAO);
