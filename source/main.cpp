@@ -12,6 +12,7 @@ bool light = false;
 int total_tasks = 2;
 bool t1 = false;
 bool t2 = false;
+int score= 0;
 int completed_tasks = 0;
 float timer = 1000;
 float lastFrame = glfwGetTime();
@@ -211,6 +212,18 @@ void imposter_start(){
    }
 }
 
+GLint power_desc[1][2] = {
+   {2895,44} // circle button
+};
+
+glm::vec3 power_positions[1]={
+   glm::vec3(0.0f,0.0f,0.1f)
+};
+
+bool usedpower[] = {
+   false
+};
+
 void check_player(){
    if(modelpositions[1].x == 600 && modelpositions[1].y == 0){
       if(!t1){
@@ -232,7 +245,44 @@ void check_player(){
          exit(0);
       }
    }
+   for(int i=0;i<sizeof(power_positions)/sizeof(power_positions[0]);i++){
+      if(modelpositions[1].x == power_positions[i].x && modelpositions[1].y == power_positions[i].y){
+         usedpower[i] = true;
+      }
+   }
 
+}
+
+void choose(){
+   int j=0;
+   for(auto i=chosing_vector.begin();i!=chosing_vector.end();i++){
+      if(j<sizeof(power_positions)/sizeof(power_positions[0])){
+         power_positions[j].x = 30*(std::get<0>(*i));
+         power_positions[j].y = -30*(std::get<1>(*i));
+      }
+      else{
+         break;
+      }
+   }
+}
+
+
+void power(unsigned int shaderProgram){
+   for(int k=0;k<sizeof(power_positions)/sizeof(power_positions[0]);k++){
+      if(!usedpower[k]){
+         glm::mat4 model = glm::mat4(1.0f);
+         // if(k==1){
+         model = glm::translate(model,power_positions[k]);
+         // }
+         // else if(k == 2){
+            // model = glm::translate(model,glm::vec3(modelpositions[k],0.02f));
+         // }
+         // model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
+         unsigned int modelLoc = glGetUniformLocation(shaderProgram,"model");
+         glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+         glDrawArrays(GL_TRIANGLES,power_desc[k][0],power_desc[k][1]);
+      }
+   }
 }
 
 int main()
@@ -243,29 +293,6 @@ int main()
    GLFWwindow *window = initialise();
    glEnable(GL_DEPTH_TEST);  
    unsigned int shaderProgram = CreateShader();
-
-   // set up vertex data (and buffer(s)) and configure vertex attributes
-   // ------------------------------------------------------------------
-   // float vertices[] = {
-   //    // put here you vertices
-   //    // maze coordinates :
-      
-   //    // player coordinates :
-   //    -265.0,-315.0,1.0,0.0,1.0,
-   //    -295.0,-345.0,1.0,0.0,1.0,
-   //    -265.0,-345.0,1.0,0.0,1.0,
-   //    -295.0,-315.0,1.0,0.0,1.0,
-   //    -295.0,-345.0,1.0,0.0,1.0,
-   //    -265.0,-345.0,1.0,0.0,1.0,
-   // };
-
-   // for(int y=0;y<height;y++){
-   //    for(int x=0;x<width;x++){
-   //       std::cout << grid[y][x];
-   //    }
-   //    std::cout << "\n";
-   // }
-
    int vsize = 0;
    while(vertices[vsize++]!=10000);
    vsize--;
@@ -312,6 +339,7 @@ int main()
    // std::cout << modelpositions[1].x << std::endl;
    // render loop
    // -----------
+   choose();
    while (!glfwWindowShouldClose(window))
    {
       // Frames :
@@ -320,6 +348,9 @@ int main()
       float deltaTime = currentFrame - lastFrame;
       lastFrame = currentFrame;
       timer -= deltaTime;
+      if(int(timer)%20==0){
+         score --;
+      }
       if(timer <= 0){
          // times up
          exit(0);
@@ -346,18 +377,15 @@ int main()
       
       glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
       create_print_text(shaderProgram);
+      power(shaderProgram);
       for(int k=0;k<sizeof(modelpositions)/sizeof(modelpositions[0]);k++){
-         glm::mat4 model = glm::mat4(1.0f);
-         // if(k==1){
+         if(!(usedpower[0] && k==2)){
+            glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model,modelpositions[k]);
-         // }
-         // else if(k == 2){
-            // model = glm::translate(model,glm::vec3(modelpositions[k],0.02f));
-         // }
-         // model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
-         unsigned int modelLoc = glGetUniformLocation(shaderProgram,"model");
-         glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-         glDrawArrays(GL_TRIANGLES,othermodeldata[k][0],othermodeldata[k][1]);
+            unsigned int modelLoc = glGetUniformLocation(shaderProgram,"model");
+            glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+            glDrawArrays(GL_TRIANGLES,othermodeldata[k][0],othermodeldata[k][1]);
+         }
       }
       // glDrawArrays(GL_TRIANGLES,0,2652);
       // glBindVertexArray(0); // no need to unbind it every time
@@ -422,7 +450,7 @@ void processInput(GLFWwindow *window)
          }
       }
    }
-   std::cout<< "x : " << modelpositions[1].x << " |  y : " << modelpositions[1].y << std::endl;
+   // std::cout<< "x : " << modelpositions[1].x << " |  y : " << modelpositions[1].y << std::endl;
    check_player();
 }
 

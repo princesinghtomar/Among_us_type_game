@@ -412,8 +412,14 @@ std::vector<std::tuple<int,int,int,int,int>> crm(){
 void abd(){
     for(int y=0;y<height;y++){
         for(int x=0;x<width;x++){
-           if(!grid[y][x]){
-               chosing_vector.push_back(std::tuple<int,int>(x,y));
+            std::cout <<grid[y][x];
+        }
+        std::cout << "\n";
+    }
+    for(int y=0;y<height;y++){
+        for(int x=0;x<width;x++){
+           if(grid[y][x] == false){
+               chosing_vector.push_back(std::tuple<int,int>(x,20-y));
            }
         }
     }
