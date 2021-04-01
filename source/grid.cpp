@@ -232,6 +232,148 @@ std::vector<std::tuple<int,int,int,int,int>> crm(){
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 5.0,   260 + 22.0, 0.5, 0.0, 0.0));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 6.0,   260 + 22.0, 0.5, 0.0, 0.0));
     grid2.push_back(std::tuple<int,int,int,int,int>(-300 + 6.0,   260 + 11.0, 0.5, 0.0, 0.0));
+
+    // some texts :-)
+    // 0
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 05.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //     |
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //     |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    // 1)
+    grid2.push_back(std::tuple<int,int,int,int,int>(15.0f, 05.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(15.0f, 25.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    // 2)
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //     |
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 15.0f, 1.0f, 1.0f, 1.0f));     //    
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // 
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 05.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    // 3)
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //     |
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //     |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    // 4)
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // 
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 05.0f, 1.0f, 1.0f, 1.0f));     // |
+    // 5)
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 15.0f, 1.0f, 1.0f, 1.0f));     //     
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // 
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //     |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    // 6)
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 05.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 15.0f, 1.0f, 1.0f, 1.0f));     //     |
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //
+    // 7)
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //     |
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //     |
+    // 8)
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 05.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //     |
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //     |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    // 9)
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // 
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //     |
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //     |
+    // T)
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //  
+    grid2.push_back(std::tuple<int,int,int,int,int>(15.0f, 25.0f, 1.0f, 1.0f, 1.0f));     // | mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(15.0f, 05.0f, 1.0f, 1.0f, 1.0f));     // | mid
+    // L)
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 05.0f, 1.0f, 1.0f, 1.0f));     // |
+    // S)
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 15.0f, 1.0f, 1.0f, 1.0f));     //     
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // 
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //     |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    // P)
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 05.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // 
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //     |
+    // E)
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 05.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //     
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    // F)
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 05.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //  ---
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 15.0f, 1.0f, 1.0f, 1.0f));     // - mid
+    // N)
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 05.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //     |
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //     |
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 25.0f, 1.0f, 1.0f, 1.0f));     // |
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //     |
+    // '/')
+    grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //   /
+    grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //  /
     
     return grid2;
 }

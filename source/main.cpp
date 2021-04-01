@@ -14,10 +14,63 @@ int completed_tasks = 0;
 float timer = 1000;
 float lastFrame = glfwGetTime();
 
-GLint othermodeldata[3][2] = {
+const int max_length = 18;
+int text_parts[max_length][2] = {
+    {2761 + 0,8}, {2761 + 8,2},  {2761 + 10,10},{2761 + 20,8},{2761 + 28,6},{2761 + 34,10},{2761 + 44,8},
+    {2761 + 52,4},{2761 + 56,10},{2761 + 66,8}, {2761 + 74,4},{2761 + 78,4},{2761 + 82,10},{2761 + 92,8},
+    {2761 + 100,8},{2761 + 108,6},{2761 + 114,6},{2761 + 120,2}
+};
+
+char text_arr[max_length] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'L', 'S', 'P','E','F','N','/'};
+
+void print_text(unsigned int shaderProgram,char c,int x,int y){
+	int i = 0;
+   int lenth = sizeof(text_arr) / sizeof(text_arr[0]);
+   while (text_arr[i] != c)
+   {
+     if (i > max_length)
+     {
+        break;
+     }
+     i++;
+   }
+  	if(i < max_length ){
+      glm::mat4 model = glm::mat4(1.0f);
+      model = glm::translate(model,glm::vec3(x,y,0.01f));
+      unsigned int modelLoc = glGetUniformLocation(shaderProgram, "model");
+      glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+      glDrawArrays(GL_LINES, text_parts[i][0], text_parts[i][1]);
+   }
+}
+void create_print_text(unsigned int shaderProgram){
+   int x = -550;
+   int y = +200;
+   std::string temp_light = light?"0N":"0FF";
+   std::string st[] = {"TL " + std::to_string(int(timer)), "LF "+std::to_string(life),"TS "+
+   std::to_string(completed_tasks)+"/"+std::to_string(total_tasks),"LT " + temp_light}; 
+   // std::cout << st[3] << std::endl;
+   // exit(0);
+   for(int i=0 ;i < sizeof(st)/sizeof(st[0]);i++){
+      x=-550;
+      for(int j=0;j<st[i].length();j++){
+         if(st[i][j]== ' '){
+            std::cout << " ";
+         }
+         else{
+            std::cout<<st[i][j];
+            print_text(shaderProgram,st[i][j],x,y);
+         }
+         x+=30;
+      }
+      std::cout << "\n";
+      y-=30;
+   }
+}
+
+GLint othermodeldata[max_length+3][2] = {
    {0,2653},
    {2653,54}, // player
-   {2707,54} // imposter
+   {2707,54}, // imposter
 };
 
 glm::vec2 modelpositions[] = {
@@ -239,6 +292,7 @@ int main()
       glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, &projection[0][0]);
       
       glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+      create_print_text(shaderProgram);
       for(int k=0;k<sizeof(modelpositions)/sizeof(modelpositions[0]);k++){
          glm::mat4 model = glm::mat4(1.0f);
          if(k==1){
