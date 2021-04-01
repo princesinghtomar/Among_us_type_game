@@ -54,29 +54,35 @@ void create_print_text(unsigned int shaderProgram){
       x=-550;
       for(int j=0;j<st[i].length();j++){
          if(st[i][j]== ' '){
-            std::cout << " ";
+            // std::cout << " ";
          }
          else{
-            std::cout<<st[i][j];
+            // std::cout<<st[i][j];
             print_text(shaderProgram,st[i][j],x,y);
          }
          x+=30;
       }
-      std::cout << "\n";
+      // std::cout << "\n";
       y-=30;
    }
 }
 
-GLint othermodeldata[max_length+3][2] = {
+GLint othermodeldata[6][2] = {
    {0,2653},
    {2653,54}, // player
    {2707,54}, // imposter
+   {2883,6},  // task 1
+   {2883,6},  // task 2
+   {2889,6}   // Exit
 };
 
-glm::vec2 modelpositions[] = {
-   glm::vec2(0.0f, 0.0f),     // maze center location
-   glm::vec2(0.0f,0.0f), // player starting position also can be used to calculate index of the box currently present
-   glm::vec2(0.0f,0.0f)    // imposter starting position to be decided later based on last open box
+glm::vec3 modelpositions[] = {
+   glm::vec3(0.0f, 0.0f,0.0f),     // maze center location
+   glm::vec3(0.0f,0.0f,0.1f), // player starting position also can be used to calculate index of the box currently present
+   glm::vec3(600.0f,-600.0f,0.2f),    // imposter starting position to be decided later based on last open box
+   glm::vec3(600.0f,0.0f,0.001f),
+   glm::vec3(0.0f,-600.0f,0.001f),
+   glm::vec3(600.0f,-600.0f,0.001f)
 };
 
 GLFWwindow *initialise()
@@ -187,10 +193,25 @@ static unsigned int CreateShader(){
    return shaderProgram;
 }
 
+void imposter_start(){
+   int val = int(rand()%3);
+   if(!val){
+      modelpositions[2] = glm::vec3(600.0f,0.0f,0.2f);
+   } else{
+      if(val == 1){
+         modelpositions[2] = glm::vec3(0.0f,-600.0f,0.2f);
+      }
+      else{
+         modelpositions[2] = glm::vec3(600.0f,-600.0f,0.2f);
+      }
+   }
+}
+
 int main()
 {
    srand(time(0));
    float *vertices = rets();
+   imposter_start();
    GLFWwindow *window = initialise();
    glEnable(GL_DEPTH_TEST);  
    unsigned int shaderProgram = CreateShader();
@@ -225,7 +246,7 @@ int main()
 
    // std::cout<<"hello " << vertices[2653*5+1] <<std::endl;
    
-   // std::cout << " >> " <<sizeof(modelpositions)/sizeof(modelpositions[0]) << std::endl;
+   std::cout << " >> " <<sizeof(modelpositions)/sizeof(modelpositions[0]) << std::endl;
 
    // exit(0);
 
@@ -295,12 +316,12 @@ int main()
       create_print_text(shaderProgram);
       for(int k=0;k<sizeof(modelpositions)/sizeof(modelpositions[0]);k++){
          glm::mat4 model = glm::mat4(1.0f);
-         if(k==1){
-            model = glm::translate(model,glm::vec3(modelpositions[k],0.01f));
-         }
-         else if(k == 2){
-            model = glm::translate(model,glm::vec3(0.0f,0.0f,0.02f));
-         }
+         // if(k==1){
+            model = glm::translate(model,modelpositions[k]);
+         // }
+         // else if(k == 2){
+            // model = glm::translate(model,glm::vec3(modelpositions[k],0.02f));
+         // }
          // model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
          unsigned int modelLoc = glGetUniformLocation(shaderProgram,"model");
          glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));

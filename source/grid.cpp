@@ -374,6 +374,22 @@ std::vector<std::tuple<int,int,int,int,int>> crm(){
     // '/')
     grid2.push_back(std::tuple<int,int,int,int,int>(05.0f, 05.0f, 1.0f, 1.0f, 1.0f));     //   /
     grid2.push_back(std::tuple<int,int,int,int,int>(25.0f, 25.0f, 1.0f, 1.0f, 1.0f));     //  /
+
+    // task cells
+    grid2.push_back(std::tuple<int,int,int,int,int>(-300 , 290, 0, 1.0f, 1.0));  // (-,+)
+    grid2.push_back(std::tuple<int,int,int,int,int>(-270 , 290, 0, 1.0f, 1.0));  // (+,+)
+    grid2.push_back(std::tuple<int,int,int,int,int>(-270 , 260, 0, 1.0f, 1.0));  // (+,-)
+    grid2.push_back(std::tuple<int,int,int,int,int>(-300 , 290, 0, 1.0f, 1.0));  // (-,+)
+    grid2.push_back(std::tuple<int,int,int,int,int>(-300 , 260, 0, 1.0f, 1.0));  // (-,-)
+    grid2.push_back(std::tuple<int,int,int,int,int>(-270 , 260, 0, 1.0f, 1.0));  // (+,-)
+    // Exit 
+    grid2.push_back(std::tuple<int,int,int,int,int>(-300 , 290, 0, 0.0f, 1.0));  // (-,+)
+    grid2.push_back(std::tuple<int,int,int,int,int>(-270 , 290, 0, 0.0f, 1.0));  // (+,+)
+    grid2.push_back(std::tuple<int,int,int,int,int>(-270 , 260, 0, 0.0f, 1.0));  // (+,-)
+    grid2.push_back(std::tuple<int,int,int,int,int>(-300 , 290, 0, 0.0f, 1.0));  // (-,+)
+    grid2.push_back(std::tuple<int,int,int,int,int>(-300 , 260, 0, 0.0f, 1.0));  // (-,-)
+    grid2.push_back(std::tuple<int,int,int,int,int>(-270 , 260, 0, 0.0f, 1.0));  // (+,-)
+
     
     return grid2;
 }
